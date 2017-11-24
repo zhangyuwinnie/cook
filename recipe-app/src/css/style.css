@@ -1,0 +1,159 @@
+            #container{
+				border: 0px solid black;
+				width: 1300px;
+				height: 1000px;
+				margin: auto;
+			}
+			#head{
+				border: 0px solid red;
+				width: 100%;
+				height: 120px;
+				/*background-color: forestgreen;*/
+				background: linear-gradient(to left, #76b852, #8DC26F);
+				margin: auto;
+			}
+			#big_title{
+				border: 0px solid green;
+				width: 100%;
+				height: 60px;
+				padding-top: 25px;
+				text-align: center;
+			}
+			span#title1{
+				font-size:42px;
+				font-family:'Lobster Two', cursive;;
+				color: white;
+
+			}
+			#small_title{
+				border: 0px solid yellow;
+				width: 95%;
+				height: 50px;
+				text-align: right;
+			}
+			span#title2{
+				font-size:20px;
+				font-family: 'Dancing Script', cursive;;
+				color: white;
+			}
+
+			#body{
+				border: 0px solid blue;
+				width: 1300px;
+				height: 850px;
+			}
+			#blank{
+				border: 0px solid red;
+				width: 1300px;
+				height: 30px;
+			}
+			#description{
+				border: 0px solid green;
+				width: 100%;
+				height: 80px;
+				text-align: center;
+			}
+			span#description{
+				font-size:50px;
+				font-family:'Indie Flower', cursive;
+				color: black;
+			}
+			.sign{
+				border: 0px solid black;
+				width: 100%;
+				height: 70px;
+				text-align: center ;
+			}
+			.login-page {
+			  width: 360px;
+			  /*padding: 8% 0 0;*/
+			  margin: auto;
+			}
+			.form {
+			  position: relative;
+			  z-index: 1;
+			  background: #FFFFFF;
+			  max-width: 360px;
+			  margin: 0 auto 100px;
+			  padding: 45px;
+			  text-align: center;
+			  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+			}
+			.form input {
+			  font-family: "Roboto", sans-serif;
+			  outline: 0;
+			  background: #f2f2f2;
+			  width: 100%;
+			  border: 0;
+			  margin: 0 0 15px;
+			  padding: 15px;
+			  box-sizing: border-box;
+			  font-size: 14px;
+			}
+			.form button {
+			  font-family: "Roboto", sans-serif;
+			  text-transform: uppercase;
+			  outline: 0;
+			  background: #4CAF50;
+			  width: 100%;
+			  border: 0;
+			  padding: 15px;
+			  color: #FFFFFF;
+			  font-size: 14px;
+			  -webkit-transition: all 0.3 ease;
+			  transition: all 0.3 ease;
+			  cursor: pointer;
+			}
+			.form button:hover,.form button:active,.form button:focus {
+			  background: #43A047;
+			}
+			.form .message {
+			  margin: 15px 0 0;
+			  color: #b3b3b3;
+			  font-size: 12px;
+			}
+			.form .message a {
+			  color: #4CAF50;
+			  text-decoration: none;
+			}
+			.form .register-form {
+			  display: none;
+			}
+			.select button {
+			  font-family: "Roboto", sans-serif;
+			  /*text-transform: uppercase;*/
+			  outline: 0;
+			  background: #4CAF50;
+			  /*width: 250px;*/
+			  border: 0;
+			  padding: 10px;
+			  color: black;
+			  font-size: 20px;
+			  -webkit-transition: all 0.3 ease;
+			  transition: all 0.3 ease;
+			  cursor: pointer;
+			}
+			.select {
+			  position: relative;
+			  z-index: 1;
+			  background: #FFFFFF;
+			  max-width: 1500px;
+			  margin: 0 auto 100px;
+			  padding: 45px;
+			  text-align: center;
+			  /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
+			}
+			.select input {
+			  font-family: "Roboto", sans-serif;
+			  outline: 0;
+			  background: #f2f2f2;
+			  width: 100%;
+			  border: 0;
+			  margin: 0 0 15px;
+			  padding: 15px;
+			  box-sizing: border-box;
+			  font-size: 18px;
+			}
+			.line-button{
+				margin: 0px 60px;
+			}
