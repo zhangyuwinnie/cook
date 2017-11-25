@@ -7,7 +7,7 @@ var cors = require('cors');
 
 // Mongoose connection with mongodb
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/recipeapp')
+mongoose.connect('mongodb://csce634:csce634@ds119406.mlab.com:19406/recipeapp')
     .then(() => { // if all is ok we will be here
       console.log('Start');
     })
