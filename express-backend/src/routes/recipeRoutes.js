@@ -43,19 +43,20 @@ recipeRouter.route('/recipes').get(function(req, res){
         itm["Count"] = count;
         result.push(itm);
       }
+      result.sort(compare);
       res.json(result);
     }
   });
 });
 
 // helper function
-// function contains(arr, element) {
-//     for (var i = 0; i < arr.length; i++) {
-//         if (arr[i] === element) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+function compare(a,b) {
+  if (b.Count< a.Count)
+    return -1;
+  if (b.Count > a.Count)
+    return 1;
+  return 0;
+}
+
 
 module.exports = recipeRouter;

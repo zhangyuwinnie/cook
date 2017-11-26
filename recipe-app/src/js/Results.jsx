@@ -62,6 +62,7 @@ export class Results extends Component {
         })
         // .then(res => this.setState({ recipes: res.data }))
         .then(response => {
+            console.log(response.data);
 
           this.setState({ recipes: response.data});
         })
@@ -98,6 +99,12 @@ export class Results extends Component {
     handleChips = (arrayValue, chipDeleted) => {
         const buttonHighlightId = `${this.state.filterCount}|${chipDeleted}`;
         this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false });
+        // new request if ingredients deleted
+        // console.log(arrayValue);
+        // console.log(chipDeleted);
+
+
+
     }
 
     modifyIngredients = () => {
