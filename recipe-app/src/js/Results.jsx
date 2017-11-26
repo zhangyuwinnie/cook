@@ -53,6 +53,7 @@ export class Results extends Component {
 
     componentDidMount() {
         let selected = this.props.location.state.ingredientsSelected;
+        this.setState({filterCriteria: selected});
         console.log(selected);
         axios.get('http://localhost:4200/recipes',{
            params: {
