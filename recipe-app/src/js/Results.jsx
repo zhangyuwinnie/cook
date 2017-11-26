@@ -113,8 +113,8 @@ export class Results extends Component {
         this.props.history.push({pathname: '/', state: {...this.state}});
     }
 
-    openRecipe = (recipeId) => () => {
-        this.props.history.push(`/recipe/${recipeId}`);
+    openRecipe = (recipeName) => () => {
+        this.props.history.push(`/recipe/${recipeName}`);
     }
 
     render() {
@@ -322,7 +322,7 @@ class ShowResults extends Component {
                         {`This recipe uses your: ${usedIngredients}`}
                     </CardText>
                     <CardActions>
-                        <FlatButton backgroundColor="#d7dcdd" label="View Full Recipe" onClick={this.props.openRecipe(recipe.id)}/>
+                        <FlatButton backgroundColor="#d7dcdd" label="View Full Recipe" onClick={this.props.openRecipe(recipe.Name)}/>
                     </CardActions>
                 </Card>
             </Col>

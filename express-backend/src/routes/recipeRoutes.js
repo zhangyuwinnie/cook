@@ -49,6 +49,21 @@ recipeRouter.route('/recipes').get(function(req, res){
   });
 });
 
+recipeRouter.route('/recipes/:id').get((req, res) => {
+  console.log("recipeRoutes, recipes-id");
+
+  let searchname = req.params.id;
+  console.log(searchname);
+  Recipe.find({Name:searchname}).exec((err, itms) => {
+    if (err){
+      console.log(err);
+    } else {
+      console.log(itms);
+      res.json(itms);
+    }
+  });
+});
+
 // helper function
 function compare(a,b) {
   if (b.Count< a.Count)

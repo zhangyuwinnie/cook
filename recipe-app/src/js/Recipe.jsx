@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {MapsLocalDining} from 'material-ui/svg-icons';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import _ from 'lodash';
+import axios from 'axios';
 
 export class Recipe extends Component {
     constructor(props) {
@@ -48,6 +49,19 @@ export class Recipe extends Component {
             });
         }
     }
+
+    componentDidMount() {
+        let path = this.props.location.pathname;
+        let search = path.split('/')[2];
+        axios.get(`http://localhost:4200/recipes/${search}`)
+        .then((response) =>{
+            console.log(response.data);
+          this.setState({recipe : response.data[0]});
+        });
+
+
+    }
+
     render() {
         const recipe = this.state.recipe;
         let stepCount = 0;

@@ -17,7 +17,7 @@ export default class ChipsArray extends Component {
         this.chipData.splice(chipToDelete, 1);
         this.props.handleChips(this.chipData);
     };
-    
+
     renderChip(data) {
         return (
             <Chip
@@ -29,7 +29,7 @@ export default class ChipsArray extends Component {
             </Chip>
         );
     }
-    
+
     render() {
         return (
           <div style={this.styles.wrapper}>
