@@ -7,7 +7,7 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 
 
 const rowstyle = {
-  backgroundColor: "#e07b45",
+  backgroundColor: "white",
   textAlign:"left",
   display: "flex",
   flexRlow: "wrap"
