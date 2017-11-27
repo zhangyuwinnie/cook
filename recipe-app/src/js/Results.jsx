@@ -13,42 +13,8 @@ export class Results extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterCriteria: ['Milk', 'Eggs', 'Butter', 'Banana', 'Tomato'],
-            filterCount: 0,
-            recipes: [
-                {
-                    id: 1,
-                    Name: 'Tomato Soup',
-                    Tags: 'Comfort-Food',
-                    Cusine: 'Italian',
-                    Type: 'Hot',
-                    TimeToCook: '30 minutes',
-                    IngredientsName: ['Vegetable Oil', 'Onion', 'Garilc', 'Tomato', 'Vegetable Stock', 'Tomato Paste', 'Pepper'],
-                    Substitutions: { 'Vegetable Stock': 'Chicken Stock' , 'Tomato': 'Tomato Puree'},
-                    Image: 'http://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/201308-xl-tomato-soup-with-chickpeas-and-pasta.jpg?itok=UY8q3aEd',
-                },
-                {
-                    id: 2,
-                    Name: 'Easy Cheesy Omlette',
-                    Tags: 'Quick-Eats',
-                    Cusine: 'American',
-                    Type: 'Hot',
-                    TimeToCook: '4 minutes',
-                    IngredientsName: ['Eggs', 'Milk', 'Bell Pepper', 'Onion', 'Mozarella Cheese', 'Ketchup'],
-                    Image: 'http://img1.cookinglight.timeinc.net/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/2017/01/main/half-moon-browned-omelet.jpg?itok=GQs78MTg',
-                },
-
-            ],
+            filterCount: 0, recipes: [], filterCriteria: [],
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps === this.props) return;
-        alert(nextProps);
-        nextProps = { filterCriteria: [
-            'Milk', 'Eggs', 'Butter', 'Banana'
-        ]};
-        this.setState({ filterCriteria: nextProps.ingredientsSelected });
     }
 
     componentDidMount() {

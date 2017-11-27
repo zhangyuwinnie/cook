@@ -11,43 +11,8 @@ export class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterCriteria: ['Milk', 'Eggs', 'Butter', 'Banana', 'Tomato'],
-            recipe: {
-                id: 1,
-                Name: 'Tomato Soup',
-                Tags: 'Comfort-Food',
-                Cusine: 'Italian',
-                Type: 'Hot',
-                TimeToCook: '30 minutes',
-                IngredientsName: ['Vegetable Oil', 'Onion', 'Garilc', 'Tomato', 'Vegetable Stock', 'Tomato Paste', 'Pepper'],
-                Substitutions: { 'Vegetable Stock': 'Chicken Stock' , 'Tomato': 'Tomato Puree'},
-                IngredientsDetails: ['2 tablespoons vegetable oil', '2 onions, chopped', '4 cloves garlic, minced', '1 can stewed tomatoes', '3 cups vegetable stock', '1/4 cup tomato paste', '1/2 teaspoon pepper'],
-                Steps: ['Heat oil over med heat in a saucepan.', 'Cook onions and garlic stirring for 5 minutes.', 'Add tomatoes, stock, tomato paste and pepper.', 'Bring to a boil then reduce heat and simmer 15 minutes or until slightly thickened Puree with an immersion blender or ordinary blender.'],
-                Image: 'http://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/201308-xl-tomato-soup-with-chickpeas-and-pasta.jpg?itok=UY8q3aEd',
-            }
+            recipe: null
          }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props === nextProps) return;
-
-        if (nextProps) {
-            this.setState({
-                recipe: {
-                    id: 1,
-                    Name: 'Tomato Soup',
-                    Tags: 'Comfort-Food',
-                    Cusine: 'Italian',
-                    Type: 'Hot',
-                    TimeToCook: '30 minutes',
-                    IngredientsName: ['Vegetable Oil', 'Onion', 'Garilc', 'Tomato', 'Vegetable Stock', 'Tomato Paste', 'Pepper'],
-                    Substitutions: { 'Vegetable Stock': 'Chicken Stock' , 'Tomato': 'Tomato Puree'},
-                    IngredientsDetails: ['2 tablespoons vegetable oil', '2 onions, chopped', '4 cloves garlic, minced', '1 can stewed tomatoes', '3 cups vegetable stock', '1/4 cup tomato paste', '1/2 teaspoon pepper'],
-                    Steps: ['Heat oil over med heat in a saucepan.', 'Cook onions and garlic stirring for 5 minutes.', 'Add tomatoes, stock, tomato paste and pepper.', 'Bring to a boil then reduce heat and simmer 15 minutes or until slightly thickened Puree with an immersion blender or ordinary blender.'],
-                    Image: 'http://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/201308-xl-tomato-soup-with-chickpeas-and-pasta.jpg?itok=UY8q3aEd',
-                }
-            });
-        }
     }
 
     componentDidMount() {
@@ -58,8 +23,6 @@ export class Recipe extends Component {
             console.log(response.data);
           this.setState({recipe : response.data[0]});
         });
-
-
     }
 
     render() {
@@ -128,9 +91,10 @@ export class Recipe extends Component {
                         </div>
                     </Row>
                     <Card>
+                        {recipe ?
                         <CardText>
                             {renderRecipe(recipe)}
-                        </CardText>
+                        </CardText> : <div> {'Loading'} </div>}
                         <CardActions>
                             <RaisedButton label="Search Results" secondary={true} icon={<MapsLocalDining />}
                                 onClick={this.showRecipes} />
