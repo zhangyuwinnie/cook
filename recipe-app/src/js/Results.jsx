@@ -80,7 +80,7 @@ export default class Results extends Component {
     }
 
     openRecipe = (recipeName) => () => {
-        this.props.history.push(`/recipe/${recipeName}`);
+        this.props.history.push({ pathname: `/recipe/${recipeName}`, state: {...this.state} });
     }
 
     render() {
@@ -275,8 +275,8 @@ class ShowResults extends Component {
         const usedIngredients = _.intersection(this.props.filterCriteria, recipe.IngredientsName);
         let missingItems = '';
         let overlayCardTitle = 'You have all ingredients';
-        if (recipe.Substitutions) {
-          missingItems = Object.keys(recipe.Substitutions);
+        if (recipe.Substitutions.length > 0) {
+          missingItems = Object.keys(recipe.Substitutions[0]);
           overlayCardTitle = `Substitutions available for: ${missingItems}`;
         }
         return (

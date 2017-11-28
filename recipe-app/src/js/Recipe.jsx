@@ -21,7 +21,7 @@ export default class Recipe extends Component {
         axios.get(`http://localhost:4200/recipes/${search}`)
         .then((response) =>{
             console.log(response.data);
-          this.setState({recipe : response.data[0]});
+          this.setState({recipe : response.data[0], filterCriteria: this.props.location.state.filterCriteria});
         });
     }
 
@@ -53,7 +53,7 @@ export default class Recipe extends Component {
                                         return (
                                             <Row start="xs">
                                                 <Col xs={5}> <font color='red'> {ingredientDetail} </font> </Col>
-                                                <Col> <font color='green'> <i> {'substitution ---> '} </i> {recipe.Substitutions[ingredient] || 'NO SUBSTITUTIONS AVAILABLE'} </font> </Col>
+                                                <Col> <font color='green'> <i> {'substitute ---> '} </i> {recipe.Substitutions[0][ingredient] || 'NO SUBSTITUTIONS AVAILABLE'} </font> </Col>
                                             </Row>
                                         );
                                     }
