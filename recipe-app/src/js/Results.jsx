@@ -9,7 +9,7 @@ import Checkbox from 'material-ui/Checkbox';
 import _ from 'lodash';
 import axios from 'axios';
 
-export class Results extends Component {
+export default class Results extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -273,8 +273,12 @@ class FilterOptions extends Component {
 class ShowResults extends Component {
     renderRecipe = (recipe) => {
         const usedIngredients = _.intersection(this.props.filterCriteria, recipe.IngredientsName);
-        const missingItems = recipe.Substitutions ? Object.keys(recipe.Substitutions) : '';
-        const overlayCardTitle = !!recipe.Substitutions ? `Substitutions available for: ${missingItems}` : 'You have all ingredients';
+        let missingItems = '';
+        let overlayCardTitle = 'You have all ingredients';
+        if (recipe.Substitutions) {
+          missingItems = Object.keys(recipe.Substitutions);
+          overlayCardTitle = `Substitutions available for: ${missingItems}`;
+        }
         return (
             <Col xs={4} key={recipe.Name}>
                 <Card>

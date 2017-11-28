@@ -7,7 +7,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import _ from 'lodash';
 import axios from 'axios';
 
-export class Recipe extends Component {
+export default class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {

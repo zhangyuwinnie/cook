@@ -11,7 +11,7 @@ import CollapsiblePanel from './util/CollapsiblePanel';
 // import RecipeService from './RecipeService';
 import axios from 'axios';
 
-export class HomePage extends Component {
+export default class HomePage extends Component {
 
     constructor(props) {
         super(props);
