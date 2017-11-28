@@ -68,18 +68,18 @@ export default class Recipe extends Component {
                                     ingredientCount++;
                                     if (_.includes(this.state.filterCriteria, ingredient)) {
                                         return (
-                                            <Row start="xs"> <Col xs={4}> <font color='green'> {ingredientDetail} </font> </Col> </Row>
+                                            <Row key={ingredientCount} start="xs"> <Col xs={4}> <font color='green'> {ingredientDetail} </font> </Col> </Row>
                                         );
                                     } else if (_.includes(Object.keys(substitutionItems), ingredient)) {
                                         return (
-                                            <Row start="xs">
+                                            <Row key={ingredientCount} start="xs">
                                                 <Col xs={5}> <font color='red'> {ingredientDetail} </font> </Col>
                                                 <Col> <font color='green'> <i> {'substitute ---> '} </i> {substitutionItems[ingredient][0]} </font> </Col>
                                             </Row>
                                         );
                                     } else {
                                         return (
-                                            <Row start="xs">
+                                            <Row key={ingredientCount} start="xs">
                                                 <Col xs={5}> <font color='red'> {ingredientDetail} </font> </Col>
                                             </Row>
                                         );
