@@ -29,6 +29,27 @@ export default class Recipe extends Component {
         const recipe = this.state.recipe;
         let stepCount = 0;
         let ingredientCount = 0;
+
+        const substitutions = recipe && recipe.Substitutions[0] ? recipe.Substitutions[0] : {};
+        let substitutionItems = {};
+
+        if (recipe) {
+          const missingItems = recipe ? _.difference(recipe.IngredientsName, this.state.filterCriteria) : [];
+          const recipeSubs = recipe.Substitutions;
+          const substitutionItemReqd = recipeSubs.length > 0 ? _.intersection(Object.keys(recipeSubs[0]), missingItems) : [];
+          substitutionItemReqd.forEach(item => {
+            const substitutes = recipeSubs[0][item];
+            const availableSub = _.intersection(substitutes, this.state.filterCriteria);
+            if (availableSub.length > 0) {
+              substitutionItems = {
+                ...substitutionItems,
+                [item]: [availableSub]
+              }
+            }
+          });
+        }
+
+
         const renderRecipe = (recipe) => {
             return (
                 <Row>
@@ -49,11 +70,17 @@ export default class Recipe extends Component {
                                         return (
                                             <Row start="xs"> <Col xs={4}> <font color='green'> {ingredientDetail} </font> </Col> </Row>
                                         );
+                                    } else if (_.includes(Object.keys(substitutionItems), ingredient)) {
+                                        return (
+                                            <Row start="xs">
+                                                <Col xs={5}> <font color='red'> {ingredientDetail} </font> </Col>
+                                                <Col> <font color='green'> <i> {'substitute ---> '} </i> {substitutionItems[ingredient][0]} </font> </Col>
+                                            </Row>
+                                        );
                                     } else {
                                         return (
                                             <Row start="xs">
                                                 <Col xs={5}> <font color='red'> {ingredientDetail} </font> </Col>
-                                                <Col> <font color='green'> <i> {'substitute ---> '} </i> {recipe.Substitutions[0][ingredient] || 'NO SUBSTITUTIONS AVAILABLE'} </font> </Col>
                                             </Row>
                                         );
                                     }

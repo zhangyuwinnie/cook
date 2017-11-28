@@ -273,11 +273,21 @@ class FilterOptions extends Component {
 class ShowResults extends Component {
     renderRecipe = (recipe) => {
         const usedIngredients = _.intersection(this.props.filterCriteria, recipe.IngredientsName);
-        let missingItems = '';
-        let overlayCardTitle = 'You have all ingredients';
-        if (recipe.Substitutions.length > 0) {
-          missingItems = Object.keys(recipe.Substitutions[0]);
-          overlayCardTitle = `Substitutions available for: ${missingItems}`;
+        const missingItems = _.difference(recipe.IngredientsName, this.props.filterCriteria);
+        const recipeSubs = recipe.Substitutions;
+        const substitutionItemReqd = recipeSubs.length > 0 ? _.intersection(Object.keys(recipeSubs[0]), missingItems) : [];
+        const substitutionItems = [];
+        substitutionItemReqd.forEach(item => {
+          const substitutes = recipeSubs[0][item];
+          if (_.intersection(substitutes, this.props.filterCriteria).length > 0) {
+            substitutionItems.push(item);
+          }
+        });
+        let overlayCardTitle = '';
+        if (missingItems.length === 0) {
+          overlayCardTitle = 'You have all ingredients';
+        } else {
+          overlayCardTitle = substitutionItems.length > 0 ? `Substitutions available for: ${substitutionItems}` : 'Nothing available to substitute missing ingredients';
         }
         return (
             <Col xs={4} key={recipe.Name}>
