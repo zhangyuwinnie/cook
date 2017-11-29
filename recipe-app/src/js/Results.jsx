@@ -100,8 +100,8 @@ export class Results extends Component {
         const buttonHighlightId = `${this.state.filterCount}|${chipDeleted}`;
         this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false });
         // new request if ingredients deleted
-        // console.log(arrayValue);
-        // console.log(chipDeleted);
+        console.log(arrayValue);
+        console.log(chipDeleted);
 
 
 
@@ -171,30 +171,37 @@ class FilterOptions extends Component {
                 display: 'block',
                 height: '100vh',
                 width:"100%",
+                height:"600px",
                 margin:'auto',
                 align:'center',
                 display:'inline-block',
                 border:'0px',
-                boxShadow:'none'
+                boxShadow:'none',
+
 
             },
             button:{
 
                 margin: '15px',
 
+            },
+            divcenter:{
+                verticalAlign:'middle'
             }
         };
         const filterProps = this.props.filterProps;
         if (data.Type === 'Landing') {
             return (
                 <Card  style={style.card}>
+                    <div style={style.divcenter}>
                     <CardHeader />
-                    <CardMedia>
+                    <CardMedia style={style.divcenter}>
                         <img src={data.Image} alt="" />
                     </CardMedia>
                     <CardActions>
                         <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
                     </CardActions>
+                    </div>
                 </Card>
             );
         } else if (data.Type === 'Restart') {
