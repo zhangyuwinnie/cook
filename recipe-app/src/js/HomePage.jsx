@@ -11,53 +11,11 @@ import CollapsiblePanel from './util/CollapsiblePanel';
 // import RecipeService from './RecipeService';
 import axios from 'axios';
 
-export class HomePage extends Component {
+export default class HomePage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {ingredientsByCategory: {}, ingredientsWithoutCategory: []};
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps === this.props) return;
-
-        // hardcoding values now - to be fetched from container
-        nextProps = {allIngredients: [
-            {Name: "Milk", Category: "Dairy"},
-            {Name: "Eggs", Category: "Meat"},
-            {Name: "Potato", Category: "Vegetable"},
-            {Name: "Banana", Category: "Fruit"},
-            {Name: "Cheese", Category: "Dairy"},
-            {Name: "Onion", Category: "Vegetable"},
-            {Name: "Butter", Category: "Dairy"},
-            {Name: "Turkey", Category: "Meat"},
-            {Name: "Brocoli", Category: "Vegetable"},
-            {Name: "Apple", Category: "Fruit"},
-            {Name: "Cream", Category: "Dairy"},
-            {Name: "Green Peppers", Category: "Vegetable"},
-        ]};
-
-        if(nextProps) {
-            const allIngredients = nextProps.allIngredients;
-            const ingredientsByCategory = {};
-            let ingredientsWithoutCategory = [];
-            allIngredients.forEach(ingredient => {
-                const category = ingredient.Category;
-                if(ingredientsByCategory.hasOwnProperty(category)) {
-                    const values = ingredientsByCategory[category];
-                    const newValues = _.concat(values, ingredient.Name);
-                    ingredientsByCategory[category] = newValues;
-                } else {
-                    ingredientsByCategory[category] = ingredient.Name;
-                }
-                ingredientsWithoutCategory.push(ingredient.Name);
-            })
-
-            this.setState({
-                ingredientsByCategory,
-                ingredientsWithoutCategory
-            })
-        }
     }
 
     componentDidMount() {
@@ -297,4 +255,3 @@ class SelectIngredients extends Component {
         );
     }
 }
-

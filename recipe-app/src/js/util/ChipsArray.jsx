@@ -15,7 +15,7 @@ export default class ChipsArray extends Component {
         this.chipData = this.props.chipData;
         const chipToDelete = this.chipData.indexOf(key);
         this.chipData.splice(chipToDelete, 1);
-        this.props.handleChips(this.chipData);
+        this.props.handleChips(this.chipData, key);
     };
 
     renderChip(data) {

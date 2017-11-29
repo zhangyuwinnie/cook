@@ -3,9 +3,9 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Route } from 'react-router-dom';
 
 // import the different components here
-import HomePageContainer from './HomePageContainer';
-import ResultsContainer from './ResultsContainer';
-import RecipeContainer from './RecipeContainer';
+import HomePage from './HomePage';
+import Results from './Results';
+import Recipe from './Recipe';
 
 export default class App extends Component {
 
@@ -14,9 +14,9 @@ export default class App extends Component {
             <Grid fluid>
                 <Row>
                     <Col xs={12}>
-                        <Route exact path='/' component={HomePageContainer} />
-                        <Route path='/recipes' component={ResultsContainer} />
-                        <Route path='/recipe/:rid' component={RecipeContainer} />
+                        <Route exact path='/' component={HomePage} />
+                        <Route path='/recipes' component={Results} />
+                        <Route path='/recipe/:rid' component={Recipe} />
                     </Col>
                 </Row>
             </Grid>

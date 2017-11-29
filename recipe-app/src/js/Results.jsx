@@ -9,46 +9,12 @@ import Checkbox from 'material-ui/Checkbox';
 import _ from 'lodash';
 import axios from 'axios';
 
-export class Results extends Component {
+export default class Results extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterCriteria: ['Milk', 'Eggs', 'Butter', 'Banana', 'Tomato'],
-            filterCount: 0,
-            recipes: [
-                {
-                    id: 1,
-                    Name: 'Tomato Soup',
-                    Tags: 'Comfort-Food',
-                    Cusine: 'Italian',
-                    Type: 'Hot',
-                    TimeToCook: '30 minutes',
-                    IngredientsName: ['Vegetable Oil', 'Onion', 'Garilc', 'Tomato', 'Vegetable Stock', 'Tomato Paste', 'Pepper'],
-                    Substitutions: { 'Vegetable Stock': 'Chicken Stock' , 'Tomato': 'Tomato Puree'},
-                    Image: 'http://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/201308-xl-tomato-soup-with-chickpeas-and-pasta.jpg?itok=UY8q3aEd',
-                },
-                {
-                    id: 2,
-                    Name: 'Easy Cheesy Omlette',
-                    Tags: 'Quick-Eats',
-                    Cusine: 'American',
-                    Type: 'Hot',
-                    TimeToCook: '4 minutes',
-                    IngredientsName: ['Eggs', 'Milk', 'Bell Pepper', 'Onion', 'Mozarella Cheese', 'Ketchup'],
-                    Image: 'http://img1.cookinglight.timeinc.net/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/2017/01/main/half-moon-browned-omelet.jpg?itok=GQs78MTg',
-                },
-
-            ],
+            filterCount: 0, recipes: [], filterCriteria: [],
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps === this.props) return;
-        alert(nextProps);
-        nextProps = { filterCriteria: [
-            'Milk', 'Eggs', 'Butter', 'Banana'
-        ]};
-        this.setState({ filterCriteria: nextProps.ingredientsSelected });
     }
 
     componentDidMount() {
@@ -114,7 +80,7 @@ export class Results extends Component {
     }
 
     openRecipe = (recipeName) => () => {
-        this.props.history.push(`/recipe/${recipeName}`);
+        this.props.history.push({ pathname: `/recipe/${recipeName}`, state: {...this.state} });
     }
 
     render() {
@@ -314,8 +280,22 @@ class FilterOptions extends Component {
 class ShowResults extends Component {
     renderRecipe = (recipe) => {
         const usedIngredients = _.intersection(this.props.filterCriteria, recipe.IngredientsName);
-        const missingItems = recipe.Substitutions ? Object.keys(recipe.Substitutions) : '';
-        const overlayCardTitle = !!recipe.Substitutions ? `Substitutions available for: ${missingItems}` : 'You have all ingredients';
+        const missingItems = _.difference(recipe.IngredientsName, this.props.filterCriteria);
+        const recipeSubs = recipe.Substitutions;
+        const substitutionItemReqd = recipeSubs.length > 0 ? _.intersection(Object.keys(recipeSubs[0]), missingItems) : [];
+        const substitutionItems = [];
+        substitutionItemReqd.forEach(item => {
+          const substitutes = recipeSubs[0][item];
+          if (_.intersection(substitutes, this.props.filterCriteria).length > 0) {
+            substitutionItems.push(item);
+          }
+        });
+        let overlayCardTitle = '';
+        if (missingItems.length === 0) {
+          overlayCardTitle = 'You have all ingredients';
+        } else {
+          overlayCardTitle = substitutionItems.length > 0 ? `Substitutions available for: ${substitutionItems}` : 'Nothing available to substitute missing ingredients';
+        }
         return (
             <Col xs={4} key={recipe.Name}>
                 <Card>
