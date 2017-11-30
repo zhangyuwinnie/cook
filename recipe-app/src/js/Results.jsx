@@ -9,33 +9,38 @@ import Checkbox from 'material-ui/Checkbox';
 import _ from 'lodash';
 import axios from 'axios';
 
+const filterNames = ['Breakfast', 'Appetizers', 'Main Course', 'Finger Food', 'Snacks',
+'Desserts','Italian', 'Indian', 'American', 'Thai', 'Southern',
+'Middle Eastern','Hot', 'Cold','< 15 mins', '15 mins - 30 mins',
+'30 mins - 1 hour', '1 hour - 2 hours', '> 2 hours','Game Day',
+'Weeknight Dinners', 'Office Lunch', 'Quick Eats', 'Slow Cook', 'Meal Prep'];
+
+
 export default class Results extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterCount: 0, recipes: [], filterCriteria: [],
+            filterCount: 0, recipes: [], filterCriteria: [], filterIngredients: [],
         };
+        this.handleChips = this.handleChips.bind(this);
     }
 
     componentDidMount() {
         let selected = this.props.location.state.ingredientsSelected;
         this.setState({filterCriteria: selected});
+        this.setState({filterIngredients: selected});
         console.log(selected);
         axios.get('http://localhost:4200/recipes',{
            params: {
             ingredients: selected
            }
         })
-        // .then(res => this.setState({ recipes: res.data }))
         .then(response => {
-            console.log(response.data);
-
           this.setState({ recipes: response.data});
         })
         .catch(function (error) {
           console.log(error);
         });
-        // console.log(this.state.recipes);
     }
 
     changeFilter = () => {
@@ -66,15 +71,34 @@ export default class Results extends Component {
         const buttonHighlightId = `${this.state.filterCount}|${chipDeleted}`;
         this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false });
         // new request if ingredients deleted
-        console.log(arrayValue);
-        console.log(chipDeleted);
 
-
-
+        if (filterNames.find((name) => name === chipDeleted)){
+            return;
+        } else {
+            let previous = this.state.filterIngredients;
+            _.pull(previous, chipDeleted);
+            this.setState({filterIngredients : previous});
+            // query with new selected ingredients if not empty
+            if (previous.length > 0){
+                axios.get('http://localhost:4200/recipes',{
+                   params: {
+                    ingredients: previous
+                   }
+                })
+                .then(response => {
+                    this.setState({ recipes: response.data});
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+            } else {
+                this.setState({ recipes: []});
+            }
+        }
     }
 
     modifyIngredients = () => {
-        alert('route back to homepage, but with state');
+        // alert('route back to homepage, but with state');
         // TODO: router - pass the state
         this.props.history.push({pathname: '/', state: {...this.state}});
     }

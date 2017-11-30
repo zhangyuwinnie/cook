@@ -15,12 +15,15 @@ export default class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {ingredientsByCategory: {}, ingredientsWithoutCategory: []};
+        this.state = {ingredientsByCategory: {},
+                      ingredientsWithoutCategory: [],
+                      ingredientsSelected:[]
+                     };
     }
 
     componentDidMount() {
+        // get all ingredients
         let results = [];
-
         axios.get('http://localhost:4200/')
         // .then(res => this.setState({ recipes: res.data }))
         .then(response => {
@@ -50,6 +53,11 @@ export default class HomePage extends Component {
         .catch(function (error) {
           console.log(error);
         });
+
+        // get selected ingredients returned from result page
+        let selected = this.props.location.state.filterIngredients;
+        this.setState({ingredientsSelected : selected});
+        console.log(selected);
     }
 
     render() {
@@ -74,6 +82,7 @@ export default class HomePage extends Component {
                     </Row>
                     <InputIngredients allIngredients={this.state.ingredientsByCategory}
                                       ingredientsName={this.state.ingredientsWithoutCategory}
+                                      ingredientsSelected={this.state.ingredientsSelected}
                                       history={this.props.history}/>
 
                  </Grid>
