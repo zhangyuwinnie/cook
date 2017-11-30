@@ -167,89 +167,134 @@ class FilterOptions extends Component {
                 display:'inline-block',
                 border:'0px',
                 boxShadow:'none',
-
-
+                // border:"2px solid blue"
+            },
+            cardheader:{
+                width:"100%",
+                height: "20px",
+                // border:"2px solid red"
+            },
+            cardtitle:{
+                height: "200px",
+                width:"100%",
+                // border:"2px solid red"
+            },
+            cardcontent:{
+                height: "140px",
+                width:"100%",
+                // border:"2px solid blue"
+            },
+            cardaction:{
+                marginTop:"20px",
+                height: "170px",
+                // border:"2px solid yellow"
+            },
+            cardimg:{
+                height:"400px",
+                // border:"2px solid green"
             },
             button:{
 
                 margin: '15px',
 
             },
-            divcenter:{
-                verticalAlign:'middle'
+            img:{
+                height:"100%",
+                width:"100%",
             }
+
         };
         const filterProps = this.props.filterProps;
         if (data.Type === 'Landing') {
             return (
-                <Card  style={style.card}>
-                    <div style={style.divcenter}>
-                    <CardHeader />
-                    <CardMedia style={style.divcenter}>
-                        <img src={data.Image} alt="" />
-                    </CardMedia>
-                    <CardActions>
-                        <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
-                    </CardActions>
+                <div  style={style.card}>
+
+                    <div style={style.cardheader}>
                     </div>
-                </Card>
+                    <div style={style.cardimg}>
+                        <img style={style.img} src={data.Image} alt="" />
+                    </div>
+                    <div style={style.cardaction}>
+                        <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
+                    </div>
+
+                </div>
             );
         } else if (data.Type === 'Restart') {
             return (
-                <Card style={style.card}>
-                    <CardHeader />
-                    <CardMedia>
-                        <img src={data.Image} alt="" />
-                    </CardMedia>
-                    <CardActions>
-                        <FlatButton  backgroundColor="#d7dcdd" label="Let's start again" onClick={this.props.changeFilter} />
-                    </CardActions>
-                </Card>
+                <div  style={style.card}>
+                    <div style={style.cardheader}>
+                    </div>
+                    <div style={style.cardimg}>
+                        <img style={style.img} src={data.Image} alt="" />
+                    </div>
+                    <div style={style.cardaction}>
+                        <FlatButton backgroundColor="#d7dcdd" label="Let's start again" onClick={this.props.changeFilter} />
+                    </div>
+
+                </div>
             );
         } else if (data.Type === 'MultiSelect') {
             return (
-                <Card style={style.card}>
-                    <CardHeader />
-                    <CardMedia>
-                        <Row>
+                <div  style={style.card}>
+                    <div style={style.cardheader}>
+                    </div>
+                    <div style={style.cardtitle}>
+                        <Row >
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
+                    </div>
+                    <div style={{height:"60px"}}>
+                    </div>
+                    <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => { const flag = (`${filterProps.filterCount}|${option}` in filterProps) ? filterProps[`${filterProps.filterCount}|${option}`][0] : false; return (<RaisedButton backgroundColor="#c9e9ef" style={style.button} key={option} label={option} primary={flag} style={style.button} onClick={this.props.addFilterTags(option)} />); })} </Row>
-                    </CardMedia>
-                    <CardActions>
+                     </div>
+                    <div style={style.cardaction}>
                         <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
-                    </CardActions>
-                </Card>
+                    </div>
+
+                </div>
             );
         } else if (data.Type === 'MultiCheckbox') {
             return (
-                <Card style={style.card}>
-                    <CardHeader />
-                    <CardMedia>
-                        <Row>
+                <div  style={style.card}>
+                    <div style={style.cardheader}>
+                    </div>
+                    <div style={style.cardtitle}>
+                        <Row >
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
+                    </div>
+                    <div style={{height:"60px"}}>
+                    </div>
+                    <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => <Checkbox style={{textAlign:"left", marginLeft:"100"}} key={option} label={option} checked={_.includes(filterProps.filterCriteria, option)} onCheck={this.props.addFilterTags(option)} />)} </Row>
-                    </CardMedia>
-                    <CardActions>
+                    </div>
+                    <div style={style.cardaction}>
                         <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
-                    </CardActions>
-                </Card>
+                    </div>
+
+                </div>
             );
         } else {
             return (
-                <Card style={style.card}>
-                    <CardHeader />
-                    <CardMedia>
-                        <Row>
+                <div  style={style.card}>
+                    <div style={style.cardheader}>
+                    </div>
+                    <div style={style.cardtitle}>
+                        <Row >
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
+                    </div>
+                    <div style={{height:"60px"}}>
+                    </div>
+                    <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => <RaisedButton backgroundColor="#c9e9ef" style={style.button} key={option} label={option} primary={filterProps[`${filterProps.filterCount}|${option}`]} style={style.button} onClick={this.props.addFilterTags(option)} />)} </Row>
-                    </CardMedia>
-                    <CardActions>
+                    </div>
+                    <div style={style.cardaction}>
                         <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
-                    </CardActions>
-                </Card>
+                    </div>
+                </div>
             );
         }
 
