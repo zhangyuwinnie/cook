@@ -367,20 +367,23 @@ class ShowResults extends Component {
         }
         return (
             <Col xs={4} key={recipe.Name}>
-                <Card>
+                <Card style={{height:"350px",position:"relative"}}>
                     <CardHeader title={recipe.Name} />
                     <CardMedia
                         overlay={<CardTitle subtitle={overlayCardTitle} /> }
                     >
-                    <img src={recipe.Image} alt="" />
+                    <img style={{height:"173px"}} src={recipe.Image} alt="" />
                     </CardMedia>
                     <CardText>
                         {`This recipe uses your: ${usedIngredients}`}
                     </CardText>
-                    <CardActions>
+                    <CardActions style={{position:"absolute", bottom:"5px"}}>
                         <FlatButton backgroundColor="#d7dcdd" label="View Full Recipe" onClick={this.props.openRecipe(recipe.Name)}/>
                     </CardActions>
+
                 </Card>
+                <Row style={{height:"20px"}}>
+                </Row>
             </Col>
         );
     }
