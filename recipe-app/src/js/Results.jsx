@@ -118,7 +118,24 @@ export default class Results extends Component {
 
     handleChips = (arrayValue, chipDeleted) => {
         const buttonHighlightId = `${this.state.filterCount}|${chipDeleted}`;
-        this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false });
+        const newFilterTags = _.intersection(this.filterNames, arrayValue);
+        let filteredList = [];
+        filteredList = this.recipeResults.filter(recipe => {
+            return this.filterTags.some(someTag => {
+                if (recipe[someTag]) {
+                    const tags = recipe[someTag].split(',');
+                    const a = _.intersection(tags, newFilterTags).length > 0;
+                    return (_.intersection(tags, newFilterTags).length > 0);
+                } else {
+                    return false;
+                }
+            })
+        })
+        if (newFilterTags.length === 0) {
+            filteredList = this.recipeResults;
+        }
+        this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false,
+                        filterTags: newFilterTags, filteredRecipes: filteredList });
         // new request if ingredients deleted
 
         if (this.filterNames.find((name) => name === chipDeleted)){
@@ -453,9 +470,14 @@ class ShowResults extends Component {
                                       />
                     </Col>
                 </Row>
-                <Row>
-                    {this.props.filteredRecipes.map(recipe => this.renderRecipe(recipe))}
-                </Row>
+                {this.props.filteredRecipes.length > 0
+                    ?
+                    <Row>
+                        {this.props.filteredRecipes.map(recipe => this.renderRecipe(recipe))}
+                    </Row>
+                    :
+                    <h3> {'Oops, sorry no result found. Try removing some filters'} </h3>
+                }
             </div>
         );
     }
