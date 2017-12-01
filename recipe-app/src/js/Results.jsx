@@ -9,20 +9,20 @@ import Checkbox from 'material-ui/Checkbox';
 import _ from 'lodash';
 import axios from 'axios';
 
-const filterNames = ['Breakfast', 'Appetizers', 'Main Course', 'Finger Food', 'Snacks',
-'Desserts','Italian', 'Indian', 'American', 'Thai', 'Southern',
-'Middle Eastern','Hot', 'Cold','< 15 mins', '15 mins - 30 mins',
-'30 mins - 1 hour', '1 hour - 2 hours', '> 2 hours','Game Day',
-'Weeknight Dinners', 'Office Lunch', 'Quick Eats', 'Slow Cook', 'Meal Prep'];
-
-
 export default class Results extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterCount: 0, recipes: [], filterCriteria: [], filterIngredients: [],
+            filterCount: 0, recipes: [], filterCriteria: [],
+            filterIngredients: [], filteredRecipes: [], filterTags: []
         };
         this.handleChips = this.handleChips.bind(this);
+        this.filterNames = ['Breakfast', 'Appetizers', 'Main Course', 'Finger Food', 'Snacks',
+                            'Desserts','Italian', 'Indian', 'American', 'Thai', 'Southern',
+                            'Middle Eastern','Hot', 'Cold','< 15 mins', '15 mins - 30 mins',
+                            '30 mins - 1 hour', '1 hour - 2 hours', '> 2 hours','Game Day',
+                            'Weeknight Dinners', 'Office Lunch', 'Quick Eats', 'Slow Cook', 'Meal Prep'];
+        this.filterTags = ['Tags', 'Cusine', 'Type', 'TimeToCook'];
     }
 
     componentDidMount() {
@@ -55,7 +55,7 @@ export default class Results extends Component {
         })
         .then(response => {
           console.log(response.data);
-          this.setState({ recipes: response.data});
+          this.setState({ recipes: response.data, filteredRecipes: response.data });
         })
         .catch(function (error) {
           console.log(error);
@@ -74,16 +74,40 @@ export default class Results extends Component {
         let newFilters = [];
         const buttonHighlightId = `${this.state.filterCount}|${option}`;
         let hightlightFlag;
+        let filteredList = [];
+        let newFilterTags = [];
         if (_.includes(this.state.filterCriteria, option)) {
             const tagToDelete = this.state.filterCriteria.indexOf(option);
             this.state.filterCriteria.splice(tagToDelete, 1);
             newFilters = this.state.filterCriteria;
             hightlightFlag = false;
+            if (_.includes(this.state.filterTags, option)) {
+                const tagToDelete = this.state.filterTags.indexOf(option);
+                this.state.filterTags.splice(tagToDelete, 1);
+                newFilterTags = this.state.filterTags;
+            }
         } else {
             newFilters = this.state.filterCriteria.concat(option);
+            newFilterTags = this.state.filterTags.concat(option);
             hightlightFlag = true;
         }
-        this.setState({ filterCriteria: newFilters, [buttonHighlightId]: [hightlightFlag] });
+        filteredList = this.state.recipes.filter(recipe => {
+            return this.filterTags.some(someTag => {
+                if (recipe[someTag]) {
+                    const tags = recipe[someTag].split(',');
+                    const a = _.intersection(tags, newFilterTags).length > 0;
+                    return (_.intersection(tags, newFilterTags).length > 0);
+                } else {
+                    return false;
+                }
+            })
+        })
+        if (newFilterTags.length === 0) {
+            filteredList = this.state.recipes;
+        }
+        this.setState({
+            filterCriteria: newFilters, [buttonHighlightId]: [hightlightFlag],
+            filteredRecipes: filteredList, filterTags: newFilterTags });
     }
 
     handleChips = (arrayValue, chipDeleted) => {
@@ -91,7 +115,7 @@ export default class Results extends Component {
         this.setState({ filterCriteria: arrayValue, [buttonHighlightId]: false });
         // new request if ingredients deleted
 
-        if (filterNames.find((name) => name === chipDeleted)){
+        if (this.filterNames.find((name) => name === chipDeleted)){
             return;
         } else {
             let previous = this.state.filterIngredients;
@@ -154,7 +178,8 @@ export default class Results extends Component {
                         </Col>
                         <Col xs={8}>
                             <ShowResults filterCriteria={this.state.filterCriteria} handleChips={this.handleChips}
-                                         recipes={this.state.recipes} openRecipe={this.openRecipe} modifyIngredients={this.modifyIngredients}/>
+                                         recipes={this.state.recipes} filteredRecipes={this.state.filteredRecipes}
+                                         openRecipe={this.openRecipe} modifyIngredients={this.modifyIngredients}/>
                         </Col>
                     </Row>
                 </Grid>
@@ -421,7 +446,7 @@ class ShowResults extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    {this.props.recipes.map(recipe => this.renderRecipe(recipe))}
+                    {this.props.filteredRecipes.map(recipe => this.renderRecipe(recipe))}
                 </Row>
             </div>
         );
