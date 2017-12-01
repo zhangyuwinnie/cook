@@ -267,8 +267,12 @@ class FilterOptions extends Component {
                 margin: '15px',
 
             },
-            img:{
-                height:"100%",
+            img1:{
+                height:"80%",
+                width:"90%",
+            },
+            img2:{
+                height:"85%",
                 width:"100%",
             }
 
@@ -281,7 +285,7 @@ class FilterOptions extends Component {
                     <div style={style.cardheader}>
                     </div>
                     <div style={style.cardimg}>
-                        <img style={style.img} src={data.Image} alt="" />
+                        <img style={style.img1} src={data.Image} alt="" />
                     </div>
                     <div style={style.cardaction}>
                         <FlatButton backgroundColor="#d7dcdd" label="I don't see anything I like" onClick={this.props.changeFilter} />
@@ -295,7 +299,7 @@ class FilterOptions extends Component {
                     <div style={style.cardheader}>
                     </div>
                     <div style={style.cardimg}>
-                        <img style={style.img} src={data.Image} alt="" />
+                        <img style={style.img2} src={data.Image} alt="" />
                     </div>
                     <div style={style.cardaction}>
                         <FlatButton backgroundColor="#d7dcdd" label="Let's start again" onClick={this.props.changeFilter} />
