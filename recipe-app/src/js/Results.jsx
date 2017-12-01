@@ -14,8 +14,9 @@ export default class Results extends Component {
         super(props);
         this.state = {
             filterCount: 0, recipes: [], filterCriteria: [],
-            filterIngredients: [], filteredRecipes: [], filterTags: []
+            filterIngredients: [], filteredRecipes: [], filterTags: [], filterChanged: false
         };
+        this.recipeResults = [];
         this.handleChips = this.handleChips.bind(this);
         this.filterNames = ['Breakfast', 'Appetizers', 'Main Course', 'Finger Food', 'Snacks',
                             'Desserts','Italian', 'Indian', 'American', 'Thai', 'Southern',
@@ -56,6 +57,7 @@ export default class Results extends Component {
         .then(response => {
           console.log(response.data);
           this.setState({ recipes: response.data, filteredRecipes: response.data });
+          this.recipeResults = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -66,7 +68,7 @@ export default class Results extends Component {
         const currentCount = this.state.filterCount;
         const newCount = (currentCount === 6) ? 1 : currentCount + 1;
         this.setState({
-            filterCount: newCount,
+            filterCount: newCount, filterChanged: true, filterTags: []
         });
     }
 
@@ -76,6 +78,10 @@ export default class Results extends Component {
         let hightlightFlag;
         let filteredList = [];
         let newFilterTags = [];
+        if (this.state.filterChanged) {
+            this.setState({ recipes: this.state.filteredRecipes})
+            this.recipeResults = this.state.filteredRecipes;
+        }
         if (_.includes(this.state.filterCriteria, option)) {
             const tagToDelete = this.state.filterCriteria.indexOf(option);
             this.state.filterCriteria.splice(tagToDelete, 1);
@@ -91,7 +97,7 @@ export default class Results extends Component {
             newFilterTags = this.state.filterTags.concat(option);
             hightlightFlag = true;
         }
-        filteredList = this.state.recipes.filter(recipe => {
+        filteredList = this.recipeResults.filter(recipe => {
             return this.filterTags.some(someTag => {
                 if (recipe[someTag]) {
                     const tags = recipe[someTag].split(',');
@@ -103,11 +109,11 @@ export default class Results extends Component {
             })
         })
         if (newFilterTags.length === 0) {
-            filteredList = this.state.recipes;
+            filteredList = this.recipeResults;
         }
         this.setState({
             filterCriteria: newFilters, [buttonHighlightId]: [hightlightFlag],
-            filteredRecipes: filteredList, filterTags: newFilterTags });
+            filteredRecipes: filteredList, filterTags: newFilterTags, filterChanged: false });
     }
 
     handleChips = (arrayValue, chipDeleted) => {
@@ -130,12 +136,14 @@ export default class Results extends Component {
                 })
                 .then(response => {
                     this.setState({ recipes: response.data});
+                    this.recipeResults = response.data;
                 })
                 .catch(function (error) {
                   console.log(error);
                 });
             } else {
                 this.setState({ recipes: []});
+                this.recipeResults = []
             }
         }
     }
@@ -178,7 +186,7 @@ export default class Results extends Component {
                         </Col>
                         <Col xs={8}>
                             <ShowResults filterCriteria={this.state.filterCriteria} handleChips={this.handleChips}
-                                         recipes={this.state.recipes} filteredRecipes={this.state.filteredRecipes}
+                                         recipes={this.recipeResults} filteredRecipes={this.state.filteredRecipes}
                                          openRecipe={this.openRecipe} modifyIngredients={this.modifyIngredients}/>
                         </Col>
                     </Row>
