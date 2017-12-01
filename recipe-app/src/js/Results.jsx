@@ -36,6 +36,7 @@ export default class Results extends Component {
            }
         })
         .then(response => {
+          console.log(response.data);
           this.setState({ recipes: response.data});
         })
         .catch(function (error) {

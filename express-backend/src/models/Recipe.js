@@ -13,7 +13,8 @@ var Recipe = new Schema({
   IngredientsDetails: Array,
   Steps: Array,
   Image: String,
-  Count: Number
+  Count: Number,
+  SubCount: Number
 
 },{
     collection: 'recipes'

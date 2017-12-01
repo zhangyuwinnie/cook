@@ -39,11 +39,31 @@ recipeRouter.route('/recipes').get(function(req, res){
       for (i = 0; i < itms.length; i++){
         let itm = itms[i];
         ingredients = itms[i].IngredientsName;
-        let count = ingres.filter((n) => ingredients.includes(n)).length;
+        substitutions = itms[i].Substitutions;
+        let count = 0;
+        let subcount = 0;
+        ingredients.filter((n) => {
+          if (ingres.includes(n)){
+            count++;
+          } else {
+            // console.log(substitutions);
+            // console.log(n);
+            if (substitutions[0] != null){
+               console.log(substitutions[0][n]);
+            }
+            // console.log(ingres);
+
+            if (substitutions[0] != null && hasOne(substitutions[0][n], ingres)) {
+              subcount++;
+            }
+          }
+        });
         itm["Count"] = count;
+        itm["SubCount"] = subcount;
         result.push(itm);
       }
       result.sort(compare);
+      // console.log(result);
       res.json(result);
     }
   });
@@ -66,11 +86,27 @@ recipeRouter.route('/recipes/:id').get((req, res) => {
 
 // helper function
 function compare(a,b) {
-  if (b.Count< a.Count)
+  if (b.Count< a.Count){
     return -1;
-  if (b.Count > a.Count)
+  } else if (b.Count > a.Count){
     return 1;
+  } else if (b.SubCount< a.SubCount){
+    return -1;
+  } else if (b.SubCount> a.SubCount){
+    return 1;
+  }
   return 0;
+}
+
+function hasOne(a, b){
+  if (a != null){
+    for (var i = 0; i < a.length; i++){
+      if (a.find((ele) => b.includes(ele))){
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 
