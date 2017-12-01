@@ -170,7 +170,7 @@ class FilterOptions extends Component {
             words:{
                 margin:20,
                 fontFamily:'Indie Flower',
-                fontSize: '40px',
+                fontSize: '35px',
                 color:'orange'
             },
             button: {
@@ -199,17 +199,17 @@ class FilterOptions extends Component {
                 // border:"2px solid red"
             },
             cardcontent:{
-                height: "140px",
+                height: "170px",
                 width:"100%",
                 // border:"2px solid blue"
             },
             cardaction:{
-                marginTop:"20px",
+                marginTop:"30px",
                 height: "170px",
                 // border:"2px solid yellow"
             },
             cardimg:{
-                height:"400px",
+                height:"403px",
                 // border:"2px solid green"
             },
             button:{
@@ -263,7 +263,7 @@ class FilterOptions extends Component {
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
                     </div>
-                    <div style={{height:"60px"}}>
+                    <div style={{height:"30px"}}>
                     </div>
                     <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => { const flag = (`${filterProps.filterCount}|${option}` in filterProps) ? filterProps[`${filterProps.filterCount}|${option}`][0] : false; return (<RaisedButton backgroundColor="#c9e9ef" style={style.button} key={option} label={option} primary={flag} style={style.button} onClick={this.props.addFilterTags(option)} />); })} </Row>
@@ -284,7 +284,7 @@ class FilterOptions extends Component {
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
                     </div>
-                    <div style={{height:"60px"}}>
+                    <div style={{height:"30px"}}>
                     </div>
                     <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => <Checkbox style={{textAlign:"left", marginLeft:"100"}} key={option} label={option} checked={_.includes(filterProps.filterCriteria, option)} onCheck={this.props.addFilterTags(option)} />)} </Row>
@@ -305,7 +305,7 @@ class FilterOptions extends Component {
                             <strong style={style.words}> {data.Text} </strong>
                         </Row>
                     </div>
-                    <div style={{height:"60px"}}>
+                    <div style={{height:"30px"}}>
                     </div>
                     <div style = {style.cardcontent}>
                         <Row center="xs"> {data.Options.map(option => <RaisedButton backgroundColor="#c9e9ef" style={style.button} key={option} label={option} primary={filterProps[`${filterProps.filterCount}|${option}`]} style={style.button} onClick={this.props.addFilterTags(option)} />)} </Row>
