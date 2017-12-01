@@ -26,13 +26,31 @@ export default class Results extends Component {
     }
 
     componentDidMount() {
+        // route from homepage
+        let query = null;
         let selected = this.props.location.state.ingredientsSelected;
-        this.setState({filterCriteria: selected});
-        this.setState({filterIngredients: selected});
-        console.log(selected);
+        if (selected != null){
+            query = selected;
+            this.setState({filterCriteria: selected});
+            this.setState({filterIngredients: selected});
+        }
+        // console.log(this.state.filterCriteria);
+
+        // route from recipe details
+        let criteria = this.props.location.state.filterCriteria;
+        console.log(criteria);
+        let ingredients = this.props.location.state.filterIngredients;
+        if (criteria != null){
+            query = ingredients;
+            this.setState({filterCriteria: criteria,filterIngredients: ingredients});
+        }
+
+
+        console.log(query);
+
         axios.get('http://localhost:4200/recipes',{
            params: {
-            ingredients: selected
+            ingredients: query
            }
         })
         .then(response => {

@@ -55,9 +55,11 @@ export default class HomePage extends Component {
         });
 
         // get selected ingredients returned from result page
-        let selected = this.props.location.state.filterIngredients;
-        this.setState({ingredientsSelected : selected});
-        console.log(selected);
+        if (this.props.location.state != null){
+            let selected = this.props.location.state.filterIngredients;
+            this.setState({ingredientsSelected : selected});
+            console.log(selected);
+        }
     }
 
     render() {

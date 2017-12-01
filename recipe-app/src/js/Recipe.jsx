@@ -11,11 +11,20 @@ export default class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipe: null
+            recipe: null,
+            filterCriteria:[],
+            filterIngredients:[]
          }
     }
 
     componentDidMount() {
+        let criteria = this.props.location.state.filterCriteria;
+        let ingredients = this.props.location.state.filterIngredients;
+        this.setState({filterCriteria: criteria,filterIngredients: ingredients});
+
+        // console.log(criteria);
+        // console.log(this.state.filterIngredients);
+
         let path = this.props.location.pathname;
         let search = path.split('/')[2];
         axios.get(`http://localhost:4200/recipes/${search}`)

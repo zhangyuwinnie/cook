@@ -100,7 +100,12 @@ function compare(a,b) {
 
 function hasOne(a, b){
   if (a != null){
+    if (!Array.isArray(a)){
+      return b.includes(a);
+    }
     for (var i = 0; i < a.length; i++){
+
+
       if (a.find((ele) => b.includes(ele))){
         return true;
       }
