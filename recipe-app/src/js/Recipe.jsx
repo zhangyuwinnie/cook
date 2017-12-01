@@ -71,6 +71,8 @@ export default class Recipe extends Component {
                             <Col xs={6}>
                                 <Row>
                                     <Col> <h3> <b> {'Ingredients'} </b> </h3> </Col>
+                                    <Col xs={4} > {''} </Col>
+                                    <Col xs={6}> <h3> <b> {'Total Preparation Time: '} </b> {recipe.TimeToCook} </h3> </Col>
                                 </Row>
                                 {recipe.IngredientsName.map(ingredient => {
                                     const ingredientDetail = recipe.IngredientsDetails[ingredientCount];
